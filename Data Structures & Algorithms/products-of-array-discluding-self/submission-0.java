@@ -1,19 +1,25 @@
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int prefix = 1;
-        int postfix = 1;
+        //brute force with division
+        int prod = 1; 
+        int zeros = 0;
         int[] ans = new int[nums.length];
-
         for(int i = 0; i < nums.length; i++){
-        ans[i] = prefix;
-        prefix *= nums[i];
+            if(nums[i] == 0){
+                zeros++;
+            } else {
+                prod = nums[i] * prod;
+            }
         }
-
-        for(int i = nums.length -1; i >= 0; i--){
-            ans[i] *= postfix;
-            postfix *= nums[i];
+        for(int j = 0; j < nums.length; j++){
+            if(zeros == 0){
+                ans[j] = prod / nums[j];
+            } else if(zeros == 1){
+                ans[j] = (nums[j] == 0) ? prod : 0;
+            } else {
+                ans[j] = 0;
+            }
         }
-
         return ans;
     }
 }  
